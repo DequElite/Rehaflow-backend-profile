@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package getprofile;
+
+import "profile/common.proto";
+
+option java_package = "com.rehaflow.profile_service.grpc";
+option java_multiple_files = true;
+
+message GetProfileByIdRequest {
+  string user_id = 1;
+  string profile_id = 2;
+  common.AccountType profile_type = 3;
+}
+
+message GetProfileByIdResponse {
+  string user_id = 1;
+  common.AccountType profile_type = 2;
+
+  oneof profile {
+    common.DoctorProfileDto doctor_profile = 3;
+    common.PatientProfileDto patient_profile = 4;
+    common.HospitalProfileDto hospital_profile = 5;
+  }
+}
+
+service GetProfile {
+  rpc GetProfileByID(GetProfileByIdRequest) returns (GetProfileByIdResponse);
+}

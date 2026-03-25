@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package signup;
+
+import "profile/common.proto";
+
+option java_package = "com.rehaflow.profile_service.grpc";
+option java_multiple_files = true;
+
+message CreateProfileDto {
+  string userId = 1;
+  common.AccountType profileType = 2;
+
+  oneof profile {
+    common.DoctorProfileDto doctor_profile = 5;
+    common.PatientProfileDto patient_profile = 6;
+    common.HospitalProfileDto hospital_profile = 7;
+  }
+}
+
+message CreatProfileResponse {
+  string profile_id = 1;
+}
+
+service CreateProfile {
+  rpc CreateProfileAndReturn(CreateProfileDto) returns (CreatProfileResponse);
+}
