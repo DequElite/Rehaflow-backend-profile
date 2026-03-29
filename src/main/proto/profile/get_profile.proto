@@ -24,6 +24,6 @@ message GetProfileByIdResponse {
   }
 }
 
-service GetProfile {
+service GetProfileService {
   rpc GetProfileByID(GetProfileByIdRequest) returns (GetProfileByIdResponse);
 }

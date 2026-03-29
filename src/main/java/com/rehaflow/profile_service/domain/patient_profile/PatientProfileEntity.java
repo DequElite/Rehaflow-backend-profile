@@ -31,7 +31,7 @@ public class PatientProfileEntity {
     private Integer height;
 
     @Column(nullable = false)
-    private Integer weight;
+    private Double weight;
 
     @Column(name = "after_operation", nullable = false)
     private Boolean afterOperation;

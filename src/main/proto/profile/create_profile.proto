@@ -18,10 +18,10 @@ message CreateProfileDto {
   }
 }
 
-message CreatProfileResponse {
+message CreateProfileResponse {
   string profile_id = 1;
 }
 
-service CreateProfile {
-  rpc CreateProfileAndReturn(CreateProfileDto) returns (CreatProfileResponse);
+service CreateProfileService {
+  rpc CreateProfileAndReturn(CreateProfileDto) returns (CreateProfileResponse);
 }
