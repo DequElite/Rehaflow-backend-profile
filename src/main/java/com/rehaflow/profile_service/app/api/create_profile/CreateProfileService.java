@@ -4,6 +4,7 @@ import com.google.protobuf.Timestamp;
 import com.rehaflow.profile_service.domain.doctor_profile.DoctorProfileEntity;
 import com.rehaflow.profile_service.domain.hospital_profile.HospitalProfileEntity;
 import com.rehaflow.profile_service.domain.patient_profile.PatientProfileEntity;
+import com.rehaflow.profile_service.domain.profile.ProfileEntity;
 import com.rehaflow.profile_service.domain.profile.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,7 +29,7 @@ public class CreateProfileService {
     }
 
     public <T> CreateProfileResponse createProfile(CreateProfileDto request) {
-        Object entity = switch (request.getProfileType()) {
+        ProfileEntity entity = switch (request.getProfileType()) {
             case PATIENT -> PatientProfileEntity.builder()
                     .userId(UUID.fromString(request.getUserId()))
                     .fullName(request.getPatientProfile().getFullName())
@@ -43,7 +44,7 @@ public class CreateProfileService {
             case DOCTOR -> DoctorProfileEntity.builder()
                     .userId(UUID.fromString(request.getUserId()))
                     .fullName(request.getDoctorProfile().getFullName())
-                    .birthday(convertProtoTimestampToLocalDate(request.getPatientProfile().getBirthday()))
+                    .birthday(convertProtoTimestampToLocalDate(request.getDoctorProfile().getBirthday()))
                     .country(request.getDoctorProfile().getCountry())
                     .city(request.getDoctorProfile().getCity())
                     .specialization(request.getDoctorProfile().getDirection())
@@ -61,16 +62,11 @@ public class CreateProfileService {
             default -> throw new IllegalArgumentException("Unknown profile type: " + request.getProfileType());
         };
 
-        JpaRepository<Object, UUID> repository = (JpaRepository<Object, UUID>) profileService.getRepo(request.getProfileType());
+        JpaRepository repository = profileService.getRepo(request.getProfileType());
 
-        Object saved = repository.save(entity);
+        ProfileEntity saved = (ProfileEntity) repository.save(entity);
 
-        UUID id = switch (request.getProfileType()) {
-            case PATIENT -> ((PatientProfileEntity) saved).getId();
-            case DOCTOR -> ((DoctorProfileEntity) saved).getId();
-            case HOSPITAL -> ((HospitalProfileEntity) saved).getId();
-            default -> throw new IllegalArgumentException("Unknown profile type: " + request.getProfileType());
-        };
+        UUID id = saved.getId();
 
         return CreateProfileResponse.newBuilder()
                 .setProfileId(id.toString())

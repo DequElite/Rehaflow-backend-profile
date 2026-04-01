@@ -2,6 +2,7 @@ package com.rehaflow.profile_service.domain.patient_profile;
 
 import com.rehaflow.profile_service.domain.doctor_profile.DoctorProfileEntity;
 import com.rehaflow.profile_service.domain.hospital_profile.HospitalProfileEntity;
+import com.rehaflow.profile_service.domain.profile.ProfileEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "patient_profile")
-public class PatientProfileEntity {
+public class PatientProfileEntity implements ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, unique = true, updatable = false)
