@@ -9,13 +9,18 @@ import org.springframework.grpc.server.service.GrpcService;
 @GrpcService
 @RequiredArgsConstructor
 public class GetProfileController extends GetProfileServiceGrpc.GetProfileServiceImplBase {
+    private final GetProfileService service;
+
     @Override
     public void getProfileByID(
             com.rehaflow.profile_service.grpc.GetProfileByIdRequest request,
             StreamObserver<com.rehaflow.profile_service.grpc.GetProfileByIdResponse> responseObserver
     ) {
         try {
+            com.rehaflow.profile_service.grpc.GetProfileByIdResponse response = this.service.getProfileById(request);
 
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
         } catch (IllegalArgumentException e) {
 
             responseObserver.onError(

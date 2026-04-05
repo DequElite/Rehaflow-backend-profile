@@ -48,7 +48,6 @@ public class GetProfileService {
                                 .setAfterTrauma(patient.getAfterTrauma())
                                 .setAfterOperation(patient.getAfterOperation())
                                 .setLimitedMovement(patient.getLimitedMovement())
-                                // birthday тоже конвертни обратно
                                 .build()
                 );
             }
