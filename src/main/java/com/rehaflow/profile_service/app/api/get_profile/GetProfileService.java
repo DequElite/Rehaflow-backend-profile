@@ -21,7 +21,7 @@ public class GetProfileService {
 
         Object profile = repository
                 .findById(UUID.fromString(request.getProfileId()))
-                .orElseThrow(() -> new IllegalArgumentException("Profile not found"));;
+                .orElseThrow(() -> new IllegalArgumentException("Profile not found"));
 
         if(!(profile instanceof ProfileEntity profileEntity)) {
             throw new IllegalArgumentException("Unknown profile type: " + request.getProfileType());
