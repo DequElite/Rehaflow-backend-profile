@@ -45,4 +45,6 @@ public class DoctorProfileEntity implements ProfileEntity {
 
     @Column(name = "hospital_name")
     private String hospitalName;
+
+    private List<String> protocols;
 }
