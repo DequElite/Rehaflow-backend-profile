@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 @RequiredArgsConstructor
 public class SearchGrpcClient {
-    private final SearchProtoMapper mapper;
     private final com.rehaflow.profile_service.grpc.SearchServiceGrpc.SearchServiceBlockingStub serviceBlockingStub;
 
     public com.rehaflow.profile_service.grpc.SearchResponse search(

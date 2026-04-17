@@ -14,19 +14,20 @@ import java.util.List;
 public class PublicDoctorController {
 
     private final GetDoctorByIdService getDoctorByIdService;
+    private final PublicDoctorsService publicDoctorsService;
 
     @QueryMapping
     public DoctorGraphDTO doctorById(@Argument String id) {
         return this.getDoctorByIdService.getDoctorById(id);
     }
 
-    /*@QueryMapping
+    @QueryMapping
     public List<DoctorGraphDTO> publicSearch(
             @Argument String search,
             @Argument DoctorFilters filters
             ) {
-
-    }*/
+        return this.publicDoctorsService.search(search, filters);
+    }
             
 
 }

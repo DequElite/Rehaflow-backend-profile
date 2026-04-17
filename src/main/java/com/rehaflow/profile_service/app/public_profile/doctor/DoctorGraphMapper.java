@@ -18,7 +18,11 @@ public class DoctorGraphMapper {
                 .city(e.getCity())
                 .specialization(e.getSpecialization())
                 .hospital_name(e.getHospitalName())
-                .hospital_profile(e.getHospitalProfile().getId().toString())
+                .hospital_profile(
+                        e.getHospitalProfile() != null
+                                ? e.getHospitalProfile().getId().toString()
+                                : null
+                )
                 .protocols(e.getProtocols())
                 .build();
     }
