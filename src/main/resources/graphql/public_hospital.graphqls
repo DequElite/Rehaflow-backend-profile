@@ -1,0 +1,27 @@
+input HospitalFilters {
+    country: String
+    city: String
+    address: String
+    type: String
+}
+
+type Hospital {
+    id: ID
+    name: String
+    country: String
+    city: String
+    address: String
+    type: String
+    doctors: [Doctor]
+}
+
+extend type Query {
+    publicHospitals(
+        search: String
+        filter: HospitalFilters
+    ): [Hospital]
+
+    hospitalById(
+        id: ID!
+    ): Hospital
+}
