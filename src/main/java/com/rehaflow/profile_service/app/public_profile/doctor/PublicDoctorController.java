@@ -22,7 +22,7 @@ public class PublicDoctorController {
     }
 
     @QueryMapping
-    public List<DoctorGraphDTO> publicSearch(
+    public List<DoctorGraphDTO> publicDoctors(
             @Argument String search,
             @Argument DoctorFilters filters
             ) {

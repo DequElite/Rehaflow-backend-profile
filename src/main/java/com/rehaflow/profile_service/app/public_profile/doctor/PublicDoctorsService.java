@@ -7,11 +7,13 @@ import com.rehaflow.profile_service.domain.doctor_profile.DoctorProfileRepositor
 import com.rehaflow.profile_service.domain.search.SearchIndex;
 import com.rehaflow.profile_service.infrastructure.grpc.search.SearchGrpcClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.rehaflow.profile_service.grpc.SearchResponse;
 
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PublicDoctorsService {
@@ -23,19 +25,23 @@ public class PublicDoctorsService {
         String search,
         DoctorFilters filters
     ) {
+        log.info("SEEEARCH");
+
         Map<String, String> filtersMap = new HashMap<>();
 
-        if (filters.birthday() != null) {
-            filtersMap.put("birthday", filters.birthday());
-        }
-        if (filters.country() != null) {
-            filtersMap.put("country", filters.country());
-        }
-        if (filters.city() != null) {
-            filtersMap.put("city", filters.city());
-        }
-        if (filters.specialization() != null) {
-            filtersMap.put("specialization", filters.specialization());
+        if (filters != null) {
+            if (filters.birthday() != null) {
+                filtersMap.put("birthday", filters.birthday());
+            }
+            if (filters.country() != null) {
+                filtersMap.put("country", filters.country());
+            }
+            if (filters.city() != null) {
+                filtersMap.put("city", filters.city());
+            }
+            if (filters.specialization() != null) {
+                filtersMap.put("specialization", filters.specialization());
+            }
         }
 
         SearchResponse searchResponse = this.searchGrpcClient.search(
@@ -57,11 +63,13 @@ public class PublicDoctorsService {
                 .filter(Objects::nonNull)
                 .toList();
 
-        List<DoctorProfileEntity> doctorProfileEntityList = this.doctorProfileRepository.findAllById(uuids);
+        List<DoctorProfileEntity> doctorProfileEntityList = this.doctorProfileRepository.findAllByUserIdIn(uuids);
 
         List<DoctorGraphDTO> doctors = doctorProfileEntityList.stream()
                 .map(mapper::toDto)
                 .toList();
+
+        log.info("SEEEARCHSF ff: {}", doctors);
 
         return doctors;
     }
