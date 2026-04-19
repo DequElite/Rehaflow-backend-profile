@@ -14,8 +14,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class GetDoctorByIdService {
-    private DoctorProfileRepository repository;
-    private DoctorGraphMapper mapper;
+    private final DoctorProfileRepository repository;
+    private final DoctorGraphMapper mapper;
 
     public DoctorGraphDTO getDoctorById(String id) {
         Optional<DoctorProfileEntity> doctorProfileEntity = this.repository.findById(UUID.fromString(id));
