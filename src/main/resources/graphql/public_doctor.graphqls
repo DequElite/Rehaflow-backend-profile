@@ -1,0 +1,29 @@
+input DoctorFilters {
+birthday: String
+country: String
+city: String
+specialization: String
+}
+
+type Doctor {
+id: ID
+full_name: String
+birthday: String
+country: String
+city: String
+specialization: String
+hospital_name: String
+hospital_profile: ID
+protocols: [ID]
+}
+
+type Query {
+publicDoctors(
+search: String
+filter: DoctorFilters
+): [Doctor]
+
+doctorById(
+id: ID!
+): Doctor
+}
