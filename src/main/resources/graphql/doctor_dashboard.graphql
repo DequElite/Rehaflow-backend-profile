@@ -1,0 +1,55 @@
+
+input PatientFilters {
+    name: String
+    age: Int
+}
+
+type Patient {
+    id: ID
+    full_name: String
+    birthday: String
+    country: String
+    city: String
+}
+
+type RehabRequest {
+    id: ID
+    patient_id: ID
+    patient_name: String
+    patient_age: Int
+    patient_height: String
+    patient_weight: String
+    patient_operation: Boolean
+    patient_trauma: Boolean
+    patient_limited_movement: Boolean
+    created_at: String
+    diagnosis_url: String
+    message_from_patient: String
+    message_from_doctor: String
+    status: String
+}
+
+type PrivateDoctor {
+    id: ID
+    full_name: String
+    birthday: String
+    country: String
+    city: String
+    specialization: String
+    hospital_name: String
+    hospital_profile: ID
+    rehab_requests: [RehabRequest]
+    protocols: [ID]
+}
+
+type DoctorDashboard {
+    doctor: PrivateDoctor
+    patients_searched: [Patient]
+}
+
+extend type Query {
+    doctorDashboard(
+        patientSearch: String
+        patientFilter: PatientFilters
+    ): DoctorDashboard
+}
